@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+import yolov5   
 
 GPIO.setmode(GPIO.BCM)
 enable = 16
