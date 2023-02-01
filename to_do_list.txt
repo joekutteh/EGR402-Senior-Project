@@ -1,0 +1,9 @@
+To do list 
+Order infrared sensors (Completed 1/31, sensors arriving 2/2) - DONE
+Install LXDE GUI? Try ctrl shift f7 to bring back GUI. If not, use terminal. This isn’t a huge problem right now. Can try ssh - GUI IS BACK, DONE
+Finalize car design, cut wood to correct size 
+Hook up hardware (ultrasonic, infrared, dc motors, battery back, camera) 
+Install hardware on car
+Find a good traffic data set to train with. Remove what we don’t need 
+Get Jetson.gpio working 
+Find solution for how to power the board 
