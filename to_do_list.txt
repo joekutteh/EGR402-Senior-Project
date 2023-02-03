@@ -5,5 +5,5 @@ Finalize car design, cut wood to correct size
 Hook up hardware (ultrasonic, infrared, dc motors, battery back, camera) 
 Install hardware on car
 Find a good traffic data set to train with. Remove what we don’t need 
-Get Jetson.gpio working 
+Get Jetson.gpio working (DONE)
 Find solution for how to power the board 
