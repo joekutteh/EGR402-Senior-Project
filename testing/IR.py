@@ -11,14 +11,20 @@ rightIR = 2
 GPIO.setup(leftIR,GPIO.IN)
 GPIO.setup(rightIR,GPIO.IN)
 
-if():
+#Both IR sensors see white surface
+if(GPIO.input(leftIR)==True and GPIO.input(rightIR)==True):
     #stay forward
 
-if():
+#Right IR sensor see black line, turn right
+if(GPIO.input(leftIR)==True and GPIO.input(rightIR)==False):
     #turn right
 
-if():
+#Left IR sensor see black line, turn left
+if(GPIO.input(leftIR)==False and GPIO.input(rightIR)==True):
     #turn left
 
-if():
+#Both IR sensors see black line
+if(GPIO.input(leftIR)==False and GPIO.input(rightIR)==False):
     #stop
+
+
