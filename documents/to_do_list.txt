@@ -1,6 +1,5 @@
 Current task list 
-Wire IR sensors
-Program IR sensors
-Finish line tracking/motor control system for next meeting
-Install hardware on car
+refine car line tracking system
+wire ultrasonic sensors and write code to send data to jetson over uart
+write scad abstract  
 Find a good traffic data set to train with. Remove what we don’t need 
