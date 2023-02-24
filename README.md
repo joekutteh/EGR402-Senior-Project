@@ -1,7 +1,9 @@
-# seniorproject
+# EGR402-Senior-Project
 
-Senior Project in Engineering at Elizabethtown College
+Senior Project in Engineering (EGR402) at Elizabethtown College
 
-Joe Kutteh, Nathan Griffin
+Students: Joe Kutteh @joekutteh , Nathan Griffin 
+
+Advisor: Dr. Li
 
 Our senior project is to build a self driving car. Our project will be powered by a Nvidia Jetson Nano and an Arduino Nano.
