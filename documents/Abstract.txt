@@ -10,15 +10,14 @@ Utilizing all the different sensors and YoloV5 enabled the making of a fully aut
 
 
 Artificial intelligence is taking the world by storm. 
-The latest developments in AI include a chat bot names ChatGPT which can answer questions in seconds.
+The latest developments in AI include a chat bot named ChatGPT, which can answer questions in seconds.
 Autonomous or self-driving cars have made leaps in the recent years.
-Many automotive companions like Tesla, GM, and Ford are working on autonomous systems of their own.
+Automotive companions like Tesla, GM, and Ford are working on autonomous systems of their own.
 These systems are not perfect, but they are making advances every day.
 The goal of this project is to take these same concepts and build an autonomous car on a smaller scale.
-Cameras, ultrasonic sensors, and infrared sensors were used to make a completely autonomous car.
-The car can follow a track, avoids obstacles, and reads traffic signs.
+Cameras, ultrasonic sensors, and infrared sensors were used to make a completely autonomous car that can follow a track, avoids obstacles, and reads traffic signs.
 Accuracy and timing are very important when it comes to autonomous car systems.
-By utilizing the Cuda cores on the Nvidia Jetson Nano data was processed in real-time and decisions were made in a timely manner.
+By utilizing the Cuda cores on the Nvidia Jetson Nano data was processed in real-time and decisions were made in a timely manner to.
 
 
 
