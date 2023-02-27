@@ -32,8 +32,7 @@ void setup() {
   pinMode(trigL, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoL, INPUT); // Sets the echoPin as an Input
 
-  //Setting baud rate to 9600
-  // Starts the serial communication
+  //Setting baud rate to 9600. Starts the serial communication
   Serial.begin(9600); 
 }
 
