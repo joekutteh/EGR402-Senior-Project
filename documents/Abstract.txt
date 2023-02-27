@@ -14,10 +14,11 @@ The latest developments in AI include a chat bot names ChatGPT which can answer 
 Autonomous or self-driving cars have made leaps in the recent years.
 Many automotive companions like Tesla, GM, and Ford are working on autonomous systems of their own.
 These systems are not perfect, but they are making advances every day.
-The goal of this project is to take these same concepts and build our own autonomous car.
-Using cameras, ultrasonic sensors, and infrared sensors we were able to make a completely autonomous car that follows a track, avoids obstacles, and reads traffic signs.
+The goal of this project is to take these same concepts and build an autonomous car on a smaller scale.
+Cameras, ultrasonic sensors, and infrared sensors were used to make a completely autonomous car.
+The car can follow a track, avoids obstacles, and reads traffic signs.
 Accuracy and timing are very important when it comes to autonomous car systems.
-By utilizing the Cuda cores on the Nvidia Jetson Nano we were able to efficiently process all the data in real-time.
-This allows us to make decisions in a timely manner.
+By utilizing the Cuda cores on the Nvidia Jetson Nano data was processed in real-time and decisions were made in a timely manner.
+
 
 
