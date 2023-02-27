@@ -16,8 +16,9 @@ Automotive companions like Tesla, GM, and Ford are working on autonomous systems
 These systems are not perfect, but they are making advances every day.
 The goal of this project is to take these same concepts and build an autonomous car on a smaller scale.
 Cameras, ultrasonic sensors, and infrared sensors were used to make a completely autonomous car that can follow a track, avoids obstacles, and reads traffic signs.
-Accuracy and timing are very important when it comes to autonomous car systems.
-By utilizing the Cuda cores on the Nvidia Jetson Nano data was processed in real-time and decisions were made in a timely manner to.
+While driving split second decisions may need to be made.
+Therefore, accuracy and timing are very important when it comes to autonomous car systems. 
+By utilizing the Cuda cores on the Nvidia Jetson Nano data was processed in real-time and 
 
 
 
