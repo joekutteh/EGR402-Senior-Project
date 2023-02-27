@@ -1,7 +1,6 @@
 #Imports
 import RPi.GPIO as GPIO
 import time
-#import yolov5   
 
 #Variables
 #Enable pins can turn the motors on/off and control speed via PWM
@@ -27,6 +26,12 @@ MOTOR4_input2 = 35
 #GPIO pin numbers for IR sensors
 leftIR = 38
 rightIR = 40
+
+#GPIO pin for button
+button = 0
+
+#GPIO pin for status LED
+led = 0
 
 GPIO.setwarnings(False)
 
@@ -104,6 +109,12 @@ def off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MO
     GPIO.output(MOTOR4_input1,GPIO.LOW)
     GPIO.output(MOTOR4_input2,GPIO.LOW)
 
+#Button pressed
+def button_pressed(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
+    off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
+    GPIO.cleanup()
+    exit
+
 #Setting how board GPIOs are numbered
 GPIO.setmode(GPIO.BOARD)
 
@@ -120,9 +131,14 @@ GPIO.setup(MOTOR4_input1,GPIO.OUT)
 GPIO.setup(MOTOR4_input2,GPIO.OUT)
 GPIO.setup(leftIR,GPIO.IN)
 GPIO.setup(rightIR,GPIO.IN)
+GPIO.setup(button,GPIO.IN,pull_up_down=GPIO.PUD_UP)
+GPIO.setup(led,GPIO.OUT)
+
+#Creating interrupt for button, when button is pressed car will shutdown
+GPIO.add_event_detect(button,GPIO.FALLING,callback=button_pressed(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2),bouncetime=50)
 
 #Initial State
-off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
+#off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
 
 #Create PWM instance with frequency of 50 Hz
 #Start PWM with a duty cycle of 0
@@ -130,37 +146,20 @@ off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3
 #PWM_enableRear = GPIO.PWM(enableRear,50)
 #PWM_enableFront.start(0)
 #PWM_enableRear.start(0)
+
+#Enabling motor controllers
 GPIO.output(enableFront, GPIO.HIGH)
 GPIO.output(enableRear, GPIO.HIGH)
 
-
-#Both IR sensors see white surface
-#if(GPIO.input(leftIR)==True and GPIO.input(rightIR)==True):
-    #stay forward
-
-#Right IR sensor see black line, turn right
-#if(GPIO.input(leftIR)==True and GPIO.input(rightIR)==False):
-    #turn right
-
-#Left IR sensor see black line, turn left
-#if(GPIO.input(leftIR)==False and GPIO.input(rightIR)==True):
-    #turn left
-
-#Both IR sensors see black line
-#if(GPIO.input(leftIR)==False and GPIO.input(rightIR)==False):
-    #stop
-
-#if GPIO.input(leftIR) == 1:
-#	print("left - black")
-#else:
-	#print("left - white")
-	
-#if GPIO.input(rightIR) == 1:
-#	print("right - black")
-#else:
-#	print("right - white")
+#Initial state
 off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
+
+#30 second delay to allow us to unplug ketboard, mouse, and display and put the car on the track
 time.sleep(30)
+
+#Turning on status led to let us know the program is about run
+GPIO.output(led, GPIO.HIGH)
+
 while(1):
 	#both on white
 	if GPIO.input(leftIR) == 0 and GPIO.input(rightIR) == 0:
