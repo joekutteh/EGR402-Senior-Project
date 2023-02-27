@@ -153,6 +153,7 @@ GPIO.output(enableRear, GPIO.HIGH)
 
 #Initial state
 off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
+GPIO.output(led, GPIO.LOW)
 
 #30 second delay to allow us to unplug ketboard, mouse, and display and put the car on the track
 time.sleep(30)
