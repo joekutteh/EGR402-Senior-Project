@@ -28,10 +28,10 @@ leftIR = 38
 rightIR = 40
 
 #GPIO pin for button
-button = 0
+button = 32
 
 #GPIO pin for status LED
-led = 0
+led = 36
 
 GPIO.setwarnings(False)
 
