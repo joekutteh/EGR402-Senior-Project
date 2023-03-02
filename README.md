@@ -2,12 +2,18 @@
 
 Senior Project in Engineering (EGR402) at Elizabethtown College
 
+Building a Self-Driving Car with Real-Time Object Detection and Collision Avoidance Capabilities
+
 Students: Joe Kutteh, Nathan Griffin 
 
 Advisor: Dr. Li
 
 Introduction:
-- Artificial intelligence is taking the world by storm. The latest developments in AI include a chat bot named ChatGPT, which can answer questions in seconds. Autonomous or self-driving cars have made leaps in the recent years. Automotive companions like Tesla, GM, and Ford are working on autonomous systems of their own. These systems are not perfect, but they are making advances every day. The goal of this project is to take these same concepts and build an autonomous car on a smaller scale. Cameras, ultrasonic sensors, and infrared sensors were used to make a completely autonomous car that can follow a track, avoids obstacles, and reads traffic signs. While driving, split second decisions may need to be made to avoid obstacles or stop at a stop sign making accuracy and timing very important when it comes to autonomous car systems.  By utilizing the Cuda cores on the Nvidia Jetson Nano, image data was processed in real-time allowing the car to make quick decisions on its path.
+- The field of artificial intelligence is rapidly advancing, with exciting developments such as the question-answering chatbot ChatGPT and self-driving cars from companies like Tesla, GM, and Ford. Enlightened by the similar concepts, this project aims to build an autonomous car on a smaller scale. 
+Cameras, ultrasonic sensors, and infrared sensors were used to make a completely autonomous car that can follow a track, avoids obstacles, and reads traffic signs.
+While driving, split second decisions may need to be made to avoid obstacles or stop at a stop sign making accuracy and timing very important. 
+By utilizing the Cuda cores on the Nvidia Jetson Nano, image data was processed in real-time using Yolov7, a deep neural network object detection algorithm.
+
 
 Circuit overview:
 - Our car will consist of multiple circuits; they will be explained here. One circuit will power 2 L293D motor controllers, 4 DC motors, and 2 infrared sensors. The IR sensors are connected to a GPIO pin on the NVIDIA Jetson Nano. The IR sensors will be used to detect a black line on a white surface. These 2 IR sensors will make up the line tracking system on the car. Next, the L293D motor controller and 4 DC motors will be on the same breadboard running on 5V. The L293D motor controller are half H-bridge chips. This means each L293D can only control 2 motors. The L293D will be used to control speed and direction of each motor. Each motor is connected to two GPIO pins. Speed of the motors will be controlled via PWM. The L293D’s will be wired to the 5V output pin on the Jetson Nano. The 4 DC motors will be connected to an external battery pack consisting of 4 AA batteries for a total of 6V.
