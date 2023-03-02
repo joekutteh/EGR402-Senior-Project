@@ -12,7 +12,7 @@ Introduction:
 - The field of artificial intelligence is rapidly advancing, with exciting developments such as the question-answering chatbot ChatGPT and self-driving cars from companies like Tesla, GM, and Ford. Enlightened by the similar concepts, this project aims to build an autonomous car on a smaller scale. 
 Cameras, ultrasonic sensors, and infrared sensors were used to make a completely autonomous car that can follow a track, avoids obstacles, and reads traffic signs.
 While driving, split second decisions may need to be made to avoid obstacles or stop at a stop sign making accuracy and timing very important. 
-By utilizing the Cuda cores on the Nvidia Jetson Nano, image data was processed in real-time using Yolov7, a deep neural network object detection algorithm.
+By utilizing the Cuda cores on the Nvidia Jetson Nano, image data was processed in real-time using YOLOv7, a deep neural network object detection algorithm.
 
 
 Circuit overview:
