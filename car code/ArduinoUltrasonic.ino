@@ -17,9 +17,11 @@ int trigB = 8;
 int echoR = 5;
 int trigR = 6;
 
+String returnString, front, left, right, back;
+
 
 void setup() {
-  //Configuring I/O
+  // put your setup code here, to run once:
   pinMode(trigF, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoF, INPUT); // Sets the echoPin as an Input
   
@@ -32,49 +34,46 @@ void setup() {
   pinMode(trigL, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoL, INPUT); // Sets the echoPin as an Input
 
-  //Setting baud rate to 9600. Starts the serial communication
-  Serial.begin(9600); 
+  Serial.begin(9600); // Starts the serial communication
 }
 
 void loop() {
-  //Loop to get distance from each sensor
-  //The thrid argument is an identification for each sensor
-  distance(echoF,trigF,100);
-  distance(echoL,trigL,200);
-  distance(echoR,trigR,300);
-  distance(echoB,trigB,400);
+  front = distance(echoF,trigF);
+  left = distance(echoL,trigL);
+  right = distance(echoR,trigR);
+  back = distance(echoB,trigB);
+  //Serial.println(String(front));
+  //Serial.println(String(left));
+  //Serial.println(String(right));
+  //Serial.println(String(back));
+  Serial.println(String(front)+String(left)+String(right)+String(back));
 
+
+
+  delay(5000); 
 }
 
-void distance(int echo, int trig, int num) {
-  //Variables
+String distance(int echo, int trig) {
   long duration;
   long distance;
-
-  //Sending trigger pulse to send wave. This is what the Jetson nano could not do
-  //Setting trig low for 2 ms
+  // put your main code here, to run repeatedly:
   digitalWrite(trig, LOW);
   delayMicroseconds(2);
-  //Setting trig to high for 10 ms
+  // Sets the trigPin on HIGH state for 10 micro seconds
   digitalWrite(trig, HIGH);
   delayMicroseconds(10);
-
-  //Setting back to low
   digitalWrite(trig, LOW);
-
   // Reads the echoPin, returns the sound wave travel time in microseconds
   duration = pulseIn(echo, HIGH);
-
-  //Calculating distance in cm
+  // Calculating the distance
   distance = duration * 0.034 / 2;
 
-  //Sends distance to Jetson Nano
-  if(distance <= 30 and distance > 0){
-
-    //The num allows us to determine which sensor the data is coming from
-    Serial.println(distance+num);
-
-    //Wait 100ms before reading data from next sensor
-    delay(100);
+  if(distance < 20 && distance >= 10) {
+    return String(distance);
+  } else if(distance > 0 && distance < 10) {
+    return "0" + String(distance);
+  } else {
+    return "00";
   }
+
 }
