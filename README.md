@@ -8,6 +8,8 @@ Students: Joe Kutteh, Nathan Griffin
 
 Advisor: Dr. Li
 
+YouTube Channel: https://www.youtube.com/@etownseniorproject2022
+
 Introduction:
 - The field of artificial intelligence is rapidly advancing, with exciting developments such as the question-answering chatbot ChatGPT and self-driving cars from companies like Tesla, GM, and Ford. Enlightened by the similar concepts, this project aims to build an autonomous car on a smaller scale. 
 Cameras, ultrasonic sensors, and infrared sensors were used to make a completely autonomous car that can follow a track, avoids obstacles, and reads traffic signs.
