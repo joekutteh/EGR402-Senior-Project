@@ -50,7 +50,7 @@ void loop() {
   Serial.println(String(front)+String(left)+String(right)+String(back));
 
   //Pause between measurments sent to Jetson Nano
-  delay(5000); 
+  delay(500); 
 }
 
 //This function will get the distance in cm from the specified ultrasonic sensor
@@ -75,7 +75,7 @@ String distance(int echo, int trig) {
   distance = duration * 0.034 / 2;
 
   //If distance is between 20 and 10cm we return the number
-  if(distance < 20 && distance >= 10) {
+  if(distance <= 20 && distance >= 10) {
     return String(distance);
 
     /* If distance is greater than 0 and less than 10 we 

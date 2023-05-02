@@ -1,4 +1,0 @@
-Current task list 
-obstacle avoidance with ultrasonic sensors
-obstacle recognition with yolo
-
