@@ -30,14 +30,13 @@ MOTOR4_input2 = 35
 leftIR = 38
 rightIR = 40
 
-#GPIO pin for button
-
 #GPIO pin for status LED
 led = 36
 
 #Disabiling warnings
 GPIO.setwarnings(False)
 
+#Reverse function for motors
 def reverse(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.HIGH)
     GPIO.output(MOTOR1_input2,GPIO.LOW)
@@ -49,8 +48,10 @@ def reverse(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input
     GPIO.output(MOTOR3_input2,GPIO.LOW)
 
     GPIO.output(MOTOR4_input1,GPIO.HIGH)
+
     GPIO.output(MOTOR4_input2,GPIO.LOW)
 
+#Forward function for motors
 def forward(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.LOW)
     GPIO.output(MOTOR1_input2,GPIO.HIGH)
@@ -64,6 +65,7 @@ def forward(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input
     GPIO.output(MOTOR4_input1,GPIO.LOW)
     GPIO.output(MOTOR4_input2,GPIO.HIGH)
 
+#Left function for motors
 def left(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.LOW)
     GPIO.output(MOTOR1_input2,GPIO.HIGH)
@@ -78,7 +80,7 @@ def left(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,M
     GPIO.output(MOTOR4_input2,GPIO.LOW)
     time.sleep(0.3)
 
-
+#Right function for motors
 def right(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
 
     GPIO.output(MOTOR1_input1,GPIO.HIGH)
@@ -94,6 +96,7 @@ def right(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,
     GPIO.output(MOTOR4_input2,GPIO.HIGH)
     time.sleep(0.3)
 
+#Off function for motors
 def off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.LOW)
     GPIO.output(MOTOR1_input2,GPIO.LOW)
@@ -151,8 +154,10 @@ while(True):
 	# Loop through the video frames
 	while cap.isOpened():
 		
+        #Flags
 	    obj = 'n'
 	    flag = 'notyet'
+	    
 	    # Read a frame from the video
 	    success, frame = cap.read()
 	    frame = cv2.flip(frame,0)
@@ -162,25 +167,29 @@ while(True):
 	    	results = model.predict(source=frame,show=True,imgsz=160,conf=0.8,verbose=False)
 	    	for r in results:
 	    		for c in r.boxes.cls:
+				    #Getting object names
 	    			obj = model.names[int(c)]
-	    			
+
+                #Checking if stop sign was detected and if stop index is > 50	
 	    		if(obj == 'Stop-Sign' and stopIndex > 50):
+				    #Resetting index everytime we deal with this case
 	    			stopIndex = 0
-	    			#print("stop sign stopping now")
+	    			
+                    #Stopping for 2 seconds
 	    			off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)	
 	    			time.sleep(2)
+				
+				#The next 4 elif's are used to track the line
 	    		elif GPIO.input(leftIR) == 0 and GPIO.input(rightIR) == 0:
 	    			forward(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
-	    			#print("f")
 	    		elif GPIO.input(leftIR) == 1 and GPIO.input(rightIR) == 0:
 	    			left(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
-	    			#print("l")
 	    		elif GPIO.input(leftIR) == 0 and GPIO.input(rightIR) == 1:
 	    			right(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
-	    			#print("r")
 	    		elif GPIO.input(leftIR) == 1 and GPIO.input(rightIR) == 1:
 	    			off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
-	    			#print("black")
+
+                #Incrementing stop index  
 	    		stopIndex=stopIndex+1
 	    				
 	    		break

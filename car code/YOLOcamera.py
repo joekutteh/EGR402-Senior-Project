@@ -26,16 +26,9 @@ while cap.isOpened():
         for r in results:
         	for c in r.boxes.cls:
         		obj = model.names[int(c)]
-
+                        
+                # Printing detected objects
         		print(obj)
-  
-        		
-        
-        
-        # Break the loop if 'q' is pressed
-        #if cv2.waitKey(1) & 0xFF == ord("q"):
-            #break
-	
 
     else:
         # Break the loop if the end of the video is reached

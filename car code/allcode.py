@@ -37,6 +37,7 @@ led = 36
 #Disabiling warnings
 GPIO.setwarnings(False)
 
+#Reverse function for motors
 def reverse(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.HIGH)
     GPIO.output(MOTOR1_input2,GPIO.LOW)
@@ -50,6 +51,7 @@ def reverse(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input
     GPIO.output(MOTOR4_input1,GPIO.HIGH)
     GPIO.output(MOTOR4_input2,GPIO.LOW)
 
+#Forward function for motors
 def forward(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.LOW)
     GPIO.output(MOTOR1_input2,GPIO.HIGH)
@@ -63,6 +65,7 @@ def forward(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input
     GPIO.output(MOTOR4_input1,GPIO.LOW)
     GPIO.output(MOTOR4_input2,GPIO.HIGH)
 
+#Left function for motors
 def left(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.LOW)
     GPIO.output(MOTOR1_input2,GPIO.HIGH)
@@ -77,7 +80,7 @@ def left(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,M
     GPIO.output(MOTOR4_input2,GPIO.LOW)
     time.sleep(0.3)
 
-
+#Right function for motors
 def right(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
 
     GPIO.output(MOTOR1_input1,GPIO.HIGH)
@@ -93,6 +96,7 @@ def right(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,
     GPIO.output(MOTOR4_input2,GPIO.HIGH)
     time.sleep(0.3)
 
+#Off function for motors
 def off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.LOW)
     GPIO.output(MOTOR1_input2,GPIO.LOW)
@@ -147,7 +151,7 @@ GPIO.output(enableRear, GPIO.HIGH)
 off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
 GPIO.output(led, GPIO.LOW)
 
-#20 second delay to allow us to unplug ketboard, mouse, and display and put the car on the track
+#30 second delay to allow us to unplug ketboard, mouse, and display and put the car on the track
 time.sleep(30)
 
 #Turning on status led to let us know the program is about run
@@ -158,31 +162,32 @@ model = YOLO('best.pt')
 
 # Open the video file
 cap = cv2.VideoCapture(0)
-#framew = int(cap.get(3))
-#frameh = int(cap.get(4))
-#size = (framew,frameh)
-#savevid = cv2.VideoWriter('filename.avi',cv2.VideoWriter_fourcc(*'MJPG'),10,size)
 
 #Main loop
 flag = 'notyet'
 stopIndex=0
+
+#Main Loop
 while(True):
     
     # Loop through the video frames
     while cap.isOpened():
         
+        #Flags
         obj = 'n'
         flag = 'notyet'
+
         # Read a frame from the video
         success, frame = cap.read()
         frame = cv2.flip(frame,0)
-        #savevid.write(frame)
 
         if success:
             # Run YOLOv8 inference on the frame
             results = model.predict(source=frame,show=False,imgsz=160,conf=0.8,verbose=False)
+
             for r in results:
                 for c in r.boxes.cls:
+                    #Getting object names
                     obj = model.names[int(c)]
 
                 #Get ultrasonic data
@@ -191,10 +196,11 @@ while(True):
                 #Parsing read in string
                 frontSen = int(sensorData[0:2])
 
+                #Debug comment
                 print(frontSen)
 
+                #If an object is present
                 if(frontSen > 0):
-                    print("OBJ")
                     right(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
                     time.sleep(0.4)
                     off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
@@ -213,54 +219,48 @@ while(True):
 
                     time.sleep(2)
 
-
+                    #Driving until a black line is detected
                     while GPIO.input(leftIR) == 0 and GPIO.input(rightIR) == 0:
-                        print("white")
                         forward(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
-                        #time.sleep(1.1)
-                        #off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
-
-
-                    print("black line")
+    
                     off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
                     time.sleep(2)
 
-
+                    #Turning back on track
                     while GPIO.input(leftIR) == 0 and GPIO.input(rightIR) == 0:
                         right(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
 
                     off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
 
+                #Checking if stop sign was detected and if stop index is > 50
                 elif(obj == 'Stop-Sign' and stopIndex > 50):
+
+                    #Resetting index everytime we deal with this case
                     stopIndex = 0
-                    print("stop sign stopping now")
+                    #Stopping for 2 seconds
                     off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)    
                     time.sleep(2)
+
+                #The next 4 elif's are used to track the line
                 elif GPIO.input(leftIR) == 0 and GPIO.input(rightIR) == 0:
                     forward(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
      
-                    print("f")
+        
                 elif GPIO.input(leftIR) == 1 and GPIO.input(rightIR) == 0:
                     left(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
 
-                    print("l")
                 elif GPIO.input(leftIR) == 0 and GPIO.input(rightIR) == 1:
                     right(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
 
-                    print("r")
+             
                 elif GPIO.input(leftIR) == 1 and GPIO.input(rightIR) == 1:
                     off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
 
-                    print("black")
-                    
+                 
+                #Incrementing stop index and resetting frontSen    
                 stopIndex=stopIndex+1
                 frontSen = 0
-                        
-                        
-            
-    
-            
-                
+                    
                 break
         # Break the loop if 'q' is pressed
         #if cv2.waitKey(1) & 0xFF == ord("q"):

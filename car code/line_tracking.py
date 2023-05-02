@@ -35,6 +35,7 @@ led = 36
 #Disabiling warnings
 GPIO.setwarnings(False)
 
+#Reverse function for motors
 def reverse(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.HIGH)
     GPIO.output(MOTOR1_input2,GPIO.LOW)
@@ -48,6 +49,7 @@ def reverse(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input
     GPIO.output(MOTOR4_input1,GPIO.HIGH)
     GPIO.output(MOTOR4_input2,GPIO.LOW)
 
+#Forward function for motors
 def forward(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.LOW)
     GPIO.output(MOTOR1_input2,GPIO.HIGH)
@@ -61,6 +63,7 @@ def forward(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input
     GPIO.output(MOTOR4_input1,GPIO.LOW)
     GPIO.output(MOTOR4_input2,GPIO.HIGH)
 
+#Left function for motors
 def left(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.LOW)
     GPIO.output(MOTOR1_input2,GPIO.HIGH)
@@ -75,7 +78,7 @@ def left(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,M
     GPIO.output(MOTOR4_input2,GPIO.LOW)
     time.sleep(0.3)
 
-
+#Right function for motors
 def right(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
 
     GPIO.output(MOTOR1_input1,GPIO.HIGH)
@@ -91,6 +94,7 @@ def right(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,
     GPIO.output(MOTOR4_input2,GPIO.HIGH)
     time.sleep(0.3)
 
+#Off function for motors
 def off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2):
     GPIO.output(MOTOR1_input1,GPIO.LOW)
     GPIO.output(MOTOR1_input2,GPIO.LOW)
@@ -127,13 +131,13 @@ GPIO.output(enableRear, GPIO.HIGH)
 off(MOTOR1_input1,MOTOR1_input2,MOTOR2_input1,MOTOR2_input2,MOTOR3_input1,MOTOR3_input2,MOTOR4_input1,MOTOR4_input2)
 GPIO.output(led, GPIO.LOW)
 
-#20 second delay to allow us to unplug ketboard, mouse, and display and put the car on the track
-time.sleep(15)
+#30 second delay to allow us to unplug ketboard, mouse, and display and put the car on the track
+time.sleep(30)
 
 #Turning on status led to let us know the program is about run
 GPIO.output(led, GPIO.HIGH)
 
-#Main loop
+#Main loop to track line
 while(True):
 
 	if GPIO.input(leftIR) == 0 and GPIO.input(rightIR) == 0:
